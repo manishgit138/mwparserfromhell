@@ -46,10 +46,15 @@ jobs:
         cp -v wheelhouse/*-manylinux*.whl dist/
     - name: Test wheel
       run: |
-        python3 --version
-        python3 -m pip install dist/mwparserfromhell-0.7.dev0-cp38-cp38-manylinux_2_17_aarch64.manylinux2014_aarch64.whl
-        python3 -m pip install pytest
-        python3 -m pytest
+        docker run --rm -v ${{ github.workspace }}:/ws:rw --workdir=/ws \
+            arm64v8/ubuntu:20.04 \
+            bash -exc 'apt-get update && apt-get -y install python3 python3-pip python3-venv && \
+            python3 -m pip install virtualenv && python3 -m venv py38-venv && \
+            source py38-venv/bin/activate && \
+            python --version && \
+            python -m pip install dist/mwparserfromhell-0.7.dev0-cp38-cp38-manylinux_2_17_aarch64.manylinux2014_aarch64.whl && \
+            python -m pip install pytest && \
+            python3 -m pytest'
     - name: Publish package to PyPI
       # Only actually publish if a new tag was pushed
       if: github.event_name == 'push' && startsWith(github.event.ref, 'refs/tags')
