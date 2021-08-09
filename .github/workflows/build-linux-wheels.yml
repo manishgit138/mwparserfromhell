@@ -19,6 +19,8 @@ jobs:
     - name: Test wheel
       run: |
         python3 --version
+        python3 -m pip install mwparserfromhell-0.7.dev0-cp38-cp38-manylinux_2_5_x86_64.manylinux1_x86_64.whl
+        python3 -m pytest
     - name: Publish package to PyPI
       # Only actually publish if a new tag was pushed
       if: github.event_name == 'push' && startsWith(github.event.ref, 'refs/tags')
@@ -44,6 +46,8 @@ jobs:
     - name: Test wheel
       run: |
         python3 --version
+        python3 -m pip install mwparserfromhell-0.7.dev0-cp38-cp38-manylinux_2_17_aarch64.manylinux2014_aarch64.whl
+        python3 -m pytest
     - name: Publish package to PyPI
       # Only actually publish if a new tag was pushed
       if: github.event_name == 'push' && startsWith(github.event.ref, 'refs/tags')
