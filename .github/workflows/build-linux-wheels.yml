@@ -16,6 +16,9 @@ jobs:
       run: |
         mkdir -p dist
         cp -v wheelhouse/*-manylinux*.whl dist/
+    - name: Test wheel
+      run: |
+        python3 --version
     - name: Publish package to PyPI
       # Only actually publish if a new tag was pushed
       if: github.event_name == 'push' && startsWith(github.event.ref, 'refs/tags')
@@ -38,6 +41,9 @@ jobs:
       run: |
         mkdir -p dist
         cp -v wheelhouse/*-manylinux*.whl dist/
+    - name: Test wheel
+      run: |
+        python3 --version
     - name: Publish package to PyPI
       # Only actually publish if a new tag was pushed
       if: github.event_name == 'push' && startsWith(github.event.ref, 'refs/tags')
